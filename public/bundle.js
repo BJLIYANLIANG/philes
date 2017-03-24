@@ -4,7 +4,7 @@
 
 var IPFS = require('ipfs-api')
 
-var ipfs = IPFS('/ip4/127.0.0.1/tcp/5001');
+var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'});
 
 function store () {
   var toStore = document.getElementById('source').value
