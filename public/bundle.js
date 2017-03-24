@@ -13517,7 +13517,7 @@ module.exports = false;
 
 // Only Node.JS has a process variable that is of [[Class]] process
 try {
- module.exports = Object.prototype.toString.call(global.process) === '[object process]'
+ module.exports = Object.prototype.toString.call(global.process) === '[object process]' 
 } catch(e) {}
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
@@ -19077,7 +19077,7 @@ const httpsRequest = require('https').request
 
 module.exports = (protocol) => {
   if (protocol.indexOf('https') === 0) {
-    return httpRequest
+    return httpsRequest
   }
 
   return httpRequest
@@ -34895,7 +34895,7 @@ function Promise(fn) {
       if (isResolved && !running) next()
     });
   }
-
+  
   (function () {
     function fulfill(val) {
       if (isResolved) return
@@ -44176,7 +44176,6 @@ ClientRequest.prototype._onFinish = function () {
 	if (self._destroyed)
 		return
 	var opts = self._opts
-  console.log(opts);
 
 	var headersObj = self._headers
 	var body = null
@@ -44413,7 +44412,7 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 		self.url = response.url
 		self.statusCode = response.status
 		self.statusMessage = response.statusText
-
+		
 		response.headers.forEach(function(header, key){
 			self.headers[key.toLowerCase()] = header
 			self.rawHeaders.push(key, header)
@@ -44501,7 +44500,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 				self.push(new Buffer(response))
 				break
 			}
-			// Falls through in IE8
+			// Falls through in IE8	
 		case 'text':
 			try { // This will fail when readyState = 3 in IE9. Switch mode and wait for readyState = 4
 				response = xhr.responseText
@@ -45626,7 +45625,7 @@ inherits(DestroyableTransform, Transform)
 DestroyableTransform.prototype.destroy = function(err) {
   if (this._destroyed) return
   this._destroyed = true
-
+  
   var self = this
   process.nextTick(function() {
     if (err)
@@ -50225,9 +50224,9 @@ function encode(num, out, offset) {
     num >>>= 7
   }
   out[offset] = num | 0
-
+  
   encode.bytes = offset - oldOffset + 1
-
+  
   return out
 }
 
@@ -50320,13 +50319,13 @@ Script.prototype.runInContext = function (context) {
     if (!(context instanceof Context)) {
         throw new TypeError("needs a 'context' argument.");
     }
-
+    
     var iframe = document.createElement('iframe');
     if (!iframe.style) iframe.style = {};
     iframe.style.display = 'none';
-
+    
     document.body.appendChild(iframe);
-
+    
     var win = iframe.contentWindow;
     var wEval = win.eval, wExecScript = win.execScript;
 
@@ -50335,7 +50334,7 @@ Script.prototype.runInContext = function (context) {
         wExecScript.call(win, 'null');
         wEval = win.eval;
     }
-
+    
     forEach(Object_keys(context), function (key) {
         win[key] = context[key];
     });
@@ -50344,11 +50343,11 @@ Script.prototype.runInContext = function (context) {
             win[key] = context[key];
         }
     });
-
+    
     var winKeys = Object_keys(win);
 
     var res = wEval.call(win, this.code);
-
+    
     forEach(Object_keys(win), function (key) {
         // Avoid copying circular objects like `top` and `window` by only
         // updating existing context properties or new properties in the `win`
@@ -50363,9 +50362,9 @@ Script.prototype.runInContext = function (context) {
             defineProp(context, key, win[key]);
         }
     });
-
+    
     document.body.removeChild(iframe);
-
+    
     return res;
 };
 
