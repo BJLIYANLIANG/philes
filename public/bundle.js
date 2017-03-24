@@ -29,7 +29,7 @@ function display (hash) {
       return console.error('ipfs cat error', err, res)
     }
 
-    document.getElementById('hash').innerText = hash
+    // document.getElementById('hash').innerText = hash
     document.getElementById('source').innerText = res.toString()
     window.history.pushState(null, "Phile", hash);
   })
