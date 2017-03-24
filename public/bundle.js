@@ -44176,6 +44176,7 @@ ClientRequest.prototype._onFinish = function () {
 	if (self._destroyed)
 		return
 	var opts = self._opts
+  console.log(opts);
 
 	var headersObj = self._headers
 	var body = null
