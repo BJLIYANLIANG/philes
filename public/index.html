@@ -5,102 +5,32 @@
 	<meta charset="UTF-8">
 	<title>Philes</title>
   <link rel="icon" href="./images/heart.ico" type="image/x-icon"/>
-	<style>
-	@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
-	html, body{
-		width: 100%;
-		height: 100%;
-		border: 0;
-		margin: 0;
-	}
-	textarea{
-		width: 100vw;
-    	height: 90vh;
-		box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		font-size:2rem;
-		padding:4rem;
-		line-height:1.4;
-		border: none;
-		display: flex;
-    	align-items: center;
-    	justify-content: center;
-    	font-family: 'Noto Sans TC', sans-serif;
-	}
-	textarea:focus{
-    	outline: 0;
-	}
-
-  .content {
-    font-size:2rem;
-		padding:.8rem;
-		line-height:1.4;
-		border: none;
-		display: flex;
-    	align-items: center;
-    	justify-content: center;
-    	font-family: 'Noto Sans TC', sans-serif;
-  }
-  /* http://blog.koalite.com/bbg/ */
-  .btn-sample {
-    color: #ffffff;
-    background-color: #611BBD;
-    border-color: #130269;
-    font-size:2rem;
-		padding:.8rem;
-		line-height:1.4;
-  }
-
-  .btn-sample:hover,
-  .btn-sample:focus,
-  .btn-sample:active,
-  .btn-sample.active,
-  .open .dropdown-toggle.btn-sample {
-    color: #ffffff;
-    background-color: #49247A;
-    border-color: #130269;
-  }
-
-  .btn-sample:active,
-  .btn-sample.active,
-  .open .dropdown-toggle.btn-sample {
-    background-image: none;
-  }
-
-  .btn-sample.disabled,
-  .btn-sample[disabled],
-  fieldset[disabled] .btn-sample,
-  .btn-sample.disabled:hover,
-  .btn-sample[disabled]:hover,
-  fieldset[disabled] .btn-sample:hover,
-  .btn-sample.disabled:focus,
-  .btn-sample[disabled]:focus,
-  fieldset[disabled] .btn-sample:focus,
-  .btn-sample.disabled:active,
-  .btn-sample[disabled]:active,
-  fieldset[disabled] .btn-sample:active,
-  .btn-sample.disabled.active,
-  .btn-sample[disabled].active,
-  fieldset[disabled] .btn-sample.active {
-    background-color: #611BBD;
-    border-color: #130269;
-  }
-
-  .btn-sample .badge {
-    color: #611BBD;
-    background-color: #ffffff;
-  }
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanstc.css">
 </head>
 <body>
+
+	<div id="mySidenav" class="sidenav">
+		<div><img src="images/philes-trans.png" width="200"></div>
+	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<br/>
+		<a href="/QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH">Clear</a>
+		<a onclick="contrast();">Contrast</a>
+		<a href="/QmeLsiLx4jMqHYP8ZL4syLRN6kxuTacdpodVitP87H8F9L">About</a>
+		<br/>
+		<button class="btn sample btn-lg btn-sample" id="store">Publish</button>
+
+	</div>
+	<span onclick="openNav()" style="float: left;"><button class="hamburger">&#9776;</button></span>
+
 	<textarea id="source" oninput="savedata();" autofocus spellcheck="false"></textarea>
-  <div class="content" id="hash" style="float: left;"><img src="images/philes-trans.png" width="200"></div>
-  <button class="btn sample btn-lg btn-sample" style="float: right;" id="store">Publish</button>
+  <!-- <div class="content" id="hash" style="float: left;"><img src="images/philes-trans.png" width="200"></div> -->
   <script>
 	function loaddata(){
-		if(window.localStorage["data"]){
-			document.getElementById("source").value = window.localStorage["data"];
+		if(window.location.pathname.slice(1) == ""){
+			if(window.localStorage["data"]){
+				document.getElementById("source").value = window.localStorage["data"];
+			}
 		}
 	}
 	function savedata(){
@@ -138,9 +68,40 @@
 	    }
 	}
 	loaddata();
+	var white = true;
 	</script>
 
-  <script src="bundle.js"></script>
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.min.js"
+	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	  crossorigin="anonymous"></script>
 
+  <script src="bundle.js"></script>
+	<script type="text/javascript">
+		/* Set the width of the side navigation to 250px */
+		function openNav() {
+		    document.getElementById("mySidenav").style.width = "250px";
+				$(".hamburger").hide();
+		}
+
+		/* Set the width of the side navigation to 0 */
+		function closeNav() {
+		    document.getElementById("mySidenav").style.width = "0";
+				$( ".hamburger" ).show();
+		}
+
+		function contrast(){
+			if(white == true){
+				$("#source")[0].style.backgroundColor = "#000";
+				$("#source")[0].style.color = "#fff";
+				white = false;
+			} else {
+				$("#source")[0].style.backgroundColor = "#fff";
+				$("#source")[0].style.color = "#000";
+				white = true;
+
+			}
+		}
+	</script>
 </body>
 </html>
