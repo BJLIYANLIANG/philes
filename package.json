@@ -1,0 +1,19 @@
+{
+  "name": "philes",
+  "version": "1.0.0",
+  "description": "Philes - distributed notepads",
+  "main": "index.js",
+  "scripts": {
+    "start": "browserify index.js > public/bundle.js && node app.js"
+  },
+  "keywords": [],
+  "author": "philes",
+  "license": "2017 copyright - all rights reserved",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "browserify": "^13.1.1",
+    "ipfs-api": "^11.1.0",
+    "express": "*"
+  }
+}

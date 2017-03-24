@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- https://github.com/s3131212/Web-Notepad -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Philes</title>
+  <link rel="icon" href="./images/heart.ico" type="image/x-icon"/>
+	<style>
+	@import url(http://fonts.googleapis.com/earlyaccess/notosanstc.css);
+	html, body{
+		width: 100%;
+		height: 100%;
+		border: 0;
+		margin: 0;
+	}
+	textarea{
+		width: 100vw;
+    	height: 90vh;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		font-size:2rem;
+		padding:4rem;
+		line-height:1.4;
+		border: none;
+		display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	font-family: 'Noto Sans TC', sans-serif;
+	}
+	textarea:focus{
+    	outline: 0;
+	}
+
+  .content {
+    font-size:2rem;
+		padding:.8rem;
+		line-height:1.4;
+		border: none;
+		display: flex;
+    	align-items: center;
+    	justify-content: center;
+    	font-family: 'Noto Sans TC', sans-serif;
+  }
+  /* http://blog.koalite.com/bbg/ */
+  .btn-sample {
+    color: #ffffff;
+    background-color: #611BBD;
+    border-color: #130269;
+    font-size:2rem;
+		padding:.8rem;
+		line-height:1.4;
+  }
+
+  .btn-sample:hover,
+  .btn-sample:focus,
+  .btn-sample:active,
+  .btn-sample.active,
+  .open .dropdown-toggle.btn-sample {
+    color: #ffffff;
+    background-color: #49247A;
+    border-color: #130269;
+  }
+
+  .btn-sample:active,
+  .btn-sample.active,
+  .open .dropdown-toggle.btn-sample {
+    background-image: none;
+  }
+
+  .btn-sample.disabled,
+  .btn-sample[disabled],
+  fieldset[disabled] .btn-sample,
+  .btn-sample.disabled:hover,
+  .btn-sample[disabled]:hover,
+  fieldset[disabled] .btn-sample:hover,
+  .btn-sample.disabled:focus,
+  .btn-sample[disabled]:focus,
+  fieldset[disabled] .btn-sample:focus,
+  .btn-sample.disabled:active,
+  .btn-sample[disabled]:active,
+  fieldset[disabled] .btn-sample:active,
+  .btn-sample.disabled.active,
+  .btn-sample[disabled].active,
+  fieldset[disabled] .btn-sample.active {
+    background-color: #611BBD;
+    border-color: #130269;
+  }
+
+  .btn-sample .badge {
+    color: #611BBD;
+    background-color: #ffffff;
+  }
+	</style>
+</head>
+<body>
+	<textarea id="source" oninput="savedata();" autofocus spellcheck="false"></textarea>
+  <div class="content" id="hash" style="float: left;"><img src="images/philes-trans.png" width="200"></div>
+  <button class="btn sample btn-lg btn-sample" style="float: right;" id="store">Publish</button>
+  <script>
+	function loaddata(){
+		if(window.localStorage["data"]){
+			document.getElementById("source").value = window.localStorage["data"];
+		}
+	}
+	function savedata(){
+		window.localStorage["data"] = document.getElementById("source").value;
+	}
+
+	//code copy from http://stackoverflow.com/questions/1601593/fire-tab-keypress-event-in-javascript
+	document.getElementById('source').onkeydown = function(e){
+		if (e.keyCode == 9) {
+			insertAtCursor('    ');
+			return false;
+		}
+	}
+
+	// code edit from http://jsfiddle.net/Znarkus/Z99mK/
+	function insertAtCursor(myValue) {
+		myField = document.getElementById("source");
+	    //IE support
+	    if (document.selection) {
+	        myField.focus();
+	        sel = document.selection.createRange();
+	        sel.text = myValue;
+	    }
+	    //MOZILLA and others
+	    else if (myField.selectionStart || myField.selectionStart == '0') {
+	        var startPos = myField.selectionStart;
+	        var endPos = myField.selectionEnd;
+	        myField.value = myField.value.substring(0, startPos)
+	            + myValue
+	            + myField.value.substring(endPos, myField.value.length);
+	        myField.selectionStart = startPos + myValue.length;
+	        myField.selectionEnd = startPos + myValue.length;
+	    } else {
+	        myField.value += myValue;
+	    }
+	}
+	loaddata();
+	</script>
+
+  <script src="bundle.js"></script>
+
+</body>
+</html>
