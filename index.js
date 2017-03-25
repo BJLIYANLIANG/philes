@@ -34,9 +34,9 @@ function display (hash) {
   })
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('store').onclick = store
-})
+// document.addEventListener('DOMContentLoaded', function () {
+//   document.getElementById('store').onclick = store
+// })
 
 if (window.location.pathname.slice(1) !== ""){
   display(window.location.pathname.slice(1));

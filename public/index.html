@@ -10,17 +10,28 @@
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanstc.css">
 </head>
 <body>
-<div id="wrapper" class="inactive">
-	<div id="sidebar-wrapper">
-			<ul id="sidebar_menu" class="sidebar-nav">
-				 <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
-			</ul>
-			<ul class="sidebar-nav" id="sidebar">
-				<li><a>Cadastro <span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-				<li><a>Consulta <span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-				<li><a>Relatorio  <span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-			</ul>
-		</div>
+	<nav class="navbar navbar-default sidebar" role="navigation">
+	    <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
+	    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class=""><a href="/QmeLsiLx4jMqHYP8ZL4syLRN6kxuTacdpodVitP87H8F9L">Philes<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-heart"></span></a></li>
+					<li ><a href="javascript:contrast();">Contrast<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-adjust"></span></a></li>
+	        <li ><a href="/QmbFMke1KXqnYyBBWxB74N4c5SBnJMVAiMNRcGu6x1AwQH">New File<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-plus-sign"></span></a></li>
+	        <li ><a href="#" onclick="raw();">Raw<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-console"></span></a></li>
+					<li ><a href="javascript:printDiv('source')">Print<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-print"></span></a></li>
+					<li id="store"><a href="#">Save<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-floppy-disk"></span></a></li>
+	      </ul>
+	    </div>
+	  </div>
+</nav>
 
 	<!-- <div id="mySidenav" class="sidenav">
 		<div><img src="images/philes-trans.png" width="200"></div>
@@ -36,16 +47,15 @@
 	</div> -->
 	<!-- <span onclick="openNav()" style="float: left;"><button class="hamburger">&#9776;</button></span> -->
 
-	<!-- Page content -->
-	<div id="page-content-wrapper">
-		<!-- Keep all page content within the page-content inset div! -->
-		<div class="page-content inset">
+	<div class="main">
+		<div class="container ">
 
 			<textarea id="source" oninput="savedata();" autofocus spellcheck="false"></textarea>
 		  <!-- <div class="content" id="hash" style="float: left;"><img src="images/philes-trans.png" width="200"></div> -->
 
 		</div>
 	</div>
+
 
   <script>
 	function loaddata(){
@@ -118,10 +128,25 @@
 			window.location = "/ipfs/" + window.location.pathname.slice(1);
 		}
 
-		$("#menu-toggle").click(function(e) {
-		        e.preventDefault();
-		        $("#wrapper").toggleClass("active");
-		});
+		function printDiv(divID) {
+      //Get the HTML of div
+      var divElements = document.getElementById(divID).innerHTML;
+      //Get the HTML of whole page
+      var oldPage = document.body.innerHTML;
+
+      //Reset the page's HTML with div's HTML only
+      document.body.innerHTML =
+        "<html><head><title></title></head><body>" +
+        divElements + "</body>";
+
+      //Print Page
+      window.print();
+
+      //Restore orignal HTML
+      document.body.innerHTML = oldPage;
+
+
+  	}
 
 	</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
