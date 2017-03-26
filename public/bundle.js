@@ -2,8 +2,7 @@
 (function (Buffer){
 'use strict'
 
-var IPFS = require('ipfs-api')
-
+var IPFS = require('ipfs-api');
 var ipfs = IPFS('127.0.0.1');
 // var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
 
@@ -43,6 +42,15 @@ document.addEventListener('DOMContentLoaded', function () {
 if (window.location.pathname.slice(1) !== ""){
   display(window.location.pathname.slice(1));
 }
+
+setInterval(function(){
+  ipfs.swarm.peers(function (err, peerInfos) {
+    if (err) {
+      document.getElementById('hash').innerText = 'Start IPFS daemon';
+    }
+    document.getElementById('hash').innerText = "Peers: " + peerInfos.length;
+  })
+}, 3000);
 
 }).call(this,require("buffer").Buffer)
 },{"buffer":64,"ipfs-api":135}],2:[function(require,module,exports){

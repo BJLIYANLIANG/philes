@@ -1,7 +1,6 @@
 'use strict'
 
-var IPFS = require('ipfs-api')
-
+var IPFS = require('ipfs-api');
 var ipfs = IPFS('127.0.0.1');
 // var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
 
@@ -34,10 +33,19 @@ function display (hash) {
   })
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//   document.getElementById('store').onclick = store
-// })
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('store').onclick = store
+})
 
 if (window.location.pathname.slice(1) !== ""){
   display(window.location.pathname.slice(1));
 }
+
+setInterval(function(){
+  ipfs.swarm.peers(function (err, peerInfos) {
+    if (err) {
+      document.getElementById('hash').innerText = 'Start IPFS daemon';
+    }
+    document.getElementById('hash').innerText = "Peers: " + peerInfos.length;
+  })
+}, 3000);
