@@ -47,16 +47,14 @@ function upload(url, cb) {
     res.setEncoding('utf8');
     res.on('data', function(chunk) {
       data += chunk;
-      // console.log(`BODY: ${chunk}`);
     });
     res.on('end', function() {
       cb(data);
-      // console.log('No more data in response.');
     });
   });
 
   req.on('error', function(e) {
-    // console.log(`problem with request: ${e.message}`);
+    console.log('problem with request:', e);
   });
 
   // write data to request body
@@ -70,9 +68,8 @@ function store () {
     if (err || !res) {
 
       upload(null, function(data){
-        // console.log("uploaded hash", data);
-        // // console.log(data);
-        window.history.pushState(null, "Phile", data);
+        console.log('successfully saved', data);
+        window.history.pushState(null, "Philes", data);
       });
 
       return;
@@ -80,9 +77,8 @@ function store () {
 
     res.forEach(function (file) {
       if (file && file.hash) {
-        console.log('successfully stored', file.hash);
-        // display(file.hash)
-        window.history.pushState(null, "Phile", file.hash);
+        console.log('successfully saved', file.hash);
+        window.history.pushState(null, "Philes", file.hash);
       }
     })
   })
@@ -96,14 +92,14 @@ function display (hash) {
       download('http://localhost:3000/ipfs/' + hash, function(data){
         // console.log(data);
         document.getElementById('source').innerText = data
-        window.history.pushState(null, "Phile", hash);
+        window.history.pushState(null, "Philes", hash);
       });
       return console.error('ipfs cat error', err, res)
     }
 
     // document.getElementById('hash').innerText = hash
     document.getElementById('source').innerText = res.toString()
-    window.history.pushState(null, "Phile", hash);
+    window.history.pushState(null, "Philes", hash);
   })
 }
 
