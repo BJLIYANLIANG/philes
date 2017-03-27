@@ -9,12 +9,11 @@
   "keywords": [],
   "author": "philes",
   "license": "2017 copyright - all rights reserved",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
     "browserify": "^13.1.1",
-    "ipfs-api": "^11.1.0",
     "express": "*",
+    "ipfs-api": "^11.1.0",
     "ipfs-client": "^0.1.2"
   }
 }
