@@ -30,8 +30,10 @@ function upload(url, cb) {
 
   var http = require("http")
   var options = {
-    hostname: 'localhost',
-    port: 3000,
+    // hostname: 'localhost',
+    // port: 3000,
+    hostname: 'philes.co',
+    port: 80,
     path: '/upload',
     method: 'POST',
     headers: {
