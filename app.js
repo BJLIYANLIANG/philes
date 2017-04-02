@@ -33,9 +33,10 @@ app.get('/ipfs/*', function(req, res) {
           };
           // var html = '<html><body><table width="100%"><tr><td bgcolor="#00000" align="center"><span style="color:white;"><a style="color: #fff" href="/' + req.originalUrl.substring(6) + '">edit</span></td></tr></table>' + result2.toString().replace(/(\r\n|\n|\r)/gm,"<br>") + '</body></html>';
           // var html = '<table width="100%"><tr><td bgcolor="#00000" align="center"><span style="color:white;"><a style="color: #fff" href="/' + req.originalUrl.substring(6) + '">edit</span></td></tr></table>' + result2.toString().replace(/(\r\n|\n|\r)/gm,"<br>");
-          var html = '<table width="100%"><tr><td bgcolor="#00000" align="center"><span style="color:white;"><a style="color: #fff" href="/' + req.originalUrl.substring(6) + '">edit</span></td></tr></table>' + result2.toString();
-          res.send(html);
-          // res.send(result2.toString());
+
+          // var html = '<table width="100%"><tr><td bgcolor="#00000" align="center"><span style="color:white;"><a style="color: #fff" href="/' + req.originalUrl.substring(6) + '">edit</span></td></tr></table>' + result2.toString();
+          // res.send(html);
+          res.send(result2.toString());
         });
       } else {
         // Hash is directory. List file links.
