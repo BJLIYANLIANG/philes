@@ -90,7 +90,8 @@ function display (hash) {
     if (err || !res) {
       // window.location.replace('http://localhost:3000/ipfs/' + hash);
       // download('http://localhost:3000/ipfs/' + hash, function(data){
-      download('http://philes.co/ipfs/' + hash, function(data){
+      // download('http://philes.co/ipfs/' + hash, function(data){
+        download('http://' + options.hostname + ':' + options.port + '/ipfs/' + hash, function(data){
         // console.log(data);
         document.getElementById('source').innerText = data
         window.history.pushState(null, "Philes", hash);
