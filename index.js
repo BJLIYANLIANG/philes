@@ -2,7 +2,8 @@
 
 var IPFS = require('ipfs-api');
 // var ipfs = IPFS({host: '138.197.122.108', port: '5001', protocol: 'http'});
-var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
+// var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
+var ipfs = IPFS()
 
 function download(url, cb) {
   var data = "";

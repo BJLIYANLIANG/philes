@@ -23,7 +23,11 @@ app.get('/ipfs/*', function(req, res) {
         // res.redirect('/web/' + req.originalUrl.substring(6));
       };
       // check if directory > 0
-      var links = result.Objects[0].Links.length;
+      try{
+        var links = result.Objects[0].Links.length;
+      } catch(e){
+        var links = 0;
+      }
       if(links == 0){
         // Not a directory
         ipfsapi.cat(req.originalUrl.substring(6), {buffer: true}, function (err, result2) {
