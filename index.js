@@ -75,7 +75,7 @@ ipfs.once('ready', () => ipfs.id((err, info) => {
 
 function download(url, cb) {
   var data = "";
-  var request = require("http").get(url, function(res) {
+  var request = require("https").get(url, function(res) {
 
     res.on('data', function(chunk) {
       data += chunk;
@@ -101,7 +101,7 @@ function upload(url, cb) {
   };
 
 
-  var http = require("http")
+  var https = require("https")
   var options = {
     hostname: host.hostname,
     port: host.port,
@@ -115,7 +115,7 @@ function upload(url, cb) {
     }
   };
 
-  var req = http.request(options, (res) => {
+  var req = https.request(options, (res) => {
     var data = "";
     res.setEncoding('utf8');
     res.on('data', function(chunk) {
@@ -165,7 +165,7 @@ function display (hash) {
   ipfs.files.get(hash, function (err, res) {
     console.log("res", res);
     if (err || !res) {
-      download('http://' + host.hostname + ':' + host.port + '/ipfs/' + hash, function(data){
+      download('https://' + host.hostname + ':' + host.port + '/ipfs/' + hash, function(data){
         document.getElementById('source').innerText = data
         window.history.pushState(null, "Philes", hash);
         hashContent = data;
