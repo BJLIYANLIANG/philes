@@ -15,7 +15,7 @@ app.use(express.static('public'));
 app.get('/ipfs/*', function(req, res) {
   if(req.originalUrl.substring(6) != ""){
     // Check if hash is directory
-    ipfsapi.ls(req.originalUrl.substring(6), {buffer: true}, function (err, result) {
+    ipfsapi.files.ls(req.originalUrl.substring(6), {buffer: true}, function (err, result) {
       if (err) {
         // res.send(err);
         // throw err;
@@ -30,7 +30,7 @@ app.get('/ipfs/*', function(req, res) {
       }
       if(links == 0){
         // Not a directory
-        ipfsapi.cat(req.originalUrl.substring(6), {buffer: true}, function (err, result2) {
+        ipfsapi.files.get(req.originalUrl.substring(6), {buffer: true}, function (err, result2) {
           if (err) {
             res.send(err);
             throw err;
@@ -40,7 +40,7 @@ app.get('/ipfs/*', function(req, res) {
 
           // var html = '<table width="100%"><tr><td bgcolor="#00000" align="center"><span style="color:white;"><a style="color: #fff" href="/' + req.originalUrl.substring(6) + '">edit</span></td></tr></table>' + result2.toString();
           // res.send(html);
-          res.send(result2.toString());
+          res.send(result2[0].content.toString());
         });
       } else {
         // Hash is directory. List file links.
@@ -56,15 +56,15 @@ app.get('/ipfs/*', function(req, res) {
   }
 });
 
-app.get('/web/*', function(req, res) {
-  try{
-    ipfsapi.util.addFromURL(req.originalUrl.substring(5), function (err, result) {
-      res.redirect('/ipfs/' + result[0].hash);
-    })
-  } catch(e) {
-    res.sendStatus(e);
-  }
-});
+// app.get('/web/*', function(req, res) {
+//   try{
+//     ipfsapi.util.addFromURL(req.originalUrl.substring(5), function (err, result) {
+//       res.redirect('/ipfs/' + result[0].hash);
+//     })
+//   } catch(e) {
+//     res.sendStatus(e);
+//   }
+// });
 
 app.get('*', function (req, res) {
   res.sendFile(__dirname + "/public/index.html");
@@ -85,7 +85,7 @@ app.post('/upload', function (req, res) {
       s._read = function noop() {}; // redundant? see update below
       s.push(contentData.msg);
       s.push(null);
-      ipfsapi.add(s, function (err, result) {
+      ipfsapi.files.add(s, function (err, result) {
         if (err) {
           res.send(err);
           throw err;

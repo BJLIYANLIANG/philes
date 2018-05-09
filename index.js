@@ -1,9 +1,77 @@
 'use strict'
 
-var IPFS = require('ipfs-api');
-// var ipfs = IPFS({host: '138.197.122.108', port: '5001', protocol: 'http'});
-// var ipfs = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
-var ipfs = IPFS()
+const host = {
+  hostname: 'localhost',
+  port: 3000
+  // hostname: 'philes.co',
+  // port: 80
+}
+
+const IPFS = require('ipfs')
+const Y = require('yjs')
+// require('y-ipfs-connector')(Y)
+require('y-websockets-client')(Y)
+require('y-memory')(Y)
+require('y-array')(Y)
+require('y-text')(Y)
+
+function repo () {
+  // return 'ipfs/yjs-demo/' + Math.random()
+  return 'ipfs/philes'
+}
+
+const ipfs = new IPFS({
+  repo: repo(),
+  EXPERIMENTAL: {
+    pubsub: true
+  }
+})
+
+var loadHash = window.location.pathname.slice(1);
+if (loadHash == ""){
+  loadHash = Math.random()
+  window.history.pushState(null, "Philes", loadHash);
+}
+var hashContent = "";
+
+Y({
+  db: {
+    name: 'memory'
+  },
+  connector: {
+    name: 'websockets-client',
+    room: loadHash
+  },
+  sourceDir: '/bower_components',
+  share: {
+    textarea: 'Text'
+  }
+}).then((y) => {
+  window.yTextarea = y
+  y.share.textarea.bind(document.getElementById('source'))
+  // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
+  window.yTextarea.share.textarea.insert(0, hashContent)
+})
+
+ipfs.once('ready', () => ipfs.id((err, info) => {
+  if (err) { throw err }
+
+  console.log('IPFS node ready with address ' + info.id)
+
+  if (loadHash !== ""){
+    display(loadHash);
+  }
+
+  setInterval(function(){
+    ipfs.swarm.peers(function (err, peerInfos) {
+      if (err) {
+        document.getElementById('hash').innerText = 'IPFS daemon not running.';
+      }
+      document.getElementById('hash').innerText = "Peers: " + peerInfos.length;
+    })
+  }, 3000);
+
+}))
 
 function download(url, cb) {
   var data = "";
@@ -25,16 +93,20 @@ function download(url, cb) {
 
 function upload(url, cb) {
 
+  // var postData = {
+  //   'msg' : document.getElementById('source').value
+  // };
   var postData = {
-    'msg' : document.getElementById('source').value
+    'msg' : window.yTextarea.share.textarea.toString()
   };
+
 
   var http = require("http")
   var options = {
-    // hostname: 'localhost',
-    // port: 3000,
-    hostname: 'philes.co',
-    port: 80,
+    hostname: host.hostname,
+    port: host.port,
+    // hostname: 'philes.co',
+    // port: 80,
     path: '/upload',
     method: 'POST',
     headers: {
@@ -64,61 +136,52 @@ function upload(url, cb) {
 }
 
 function store () {
-  var toStore = document.getElementById('source').value
-  ipfs.add(new Buffer(toStore), function (err, res) {
+  console.log("Saving to IPFS");
+  // var toStore = document.getElementById('source').value
+  var toStore = window.yTextarea.share.textarea.toString()
+  ipfs.files.add(new Buffer(toStore), function (err, res) {
     if (err || !res) {
-
-      upload(null, function(data){
-        console.log('successfully saved', data);
-        window.history.pushState(null, "Philes", data);
-      });
-
-      return;
+      return console.error('ipfs add error', err, res)
     }
 
     res.forEach(function (file) {
+      console.log("file", file);
       if (file && file.hash) {
-        console.log('successfully saved', file.hash);
-        window.history.pushState(null, "Philes", file.hash);
+        console.log('successfully saved locally', file.hash);
+        upload(null, function(data){
+          console.log('successfully saved on cluster', data);
+          window.history.pushState(null, "Philes", data);
+        });
+        // window.history.pushState(null, "Philes", file.hash);
       }
     })
   })
 }
 
 function display (hash) {
-  // buffer: true results in the returned result being a buffer rather than a stream
-  ipfs.cat(hash, {buffer: true}, function (err, res) {
+  console.log("Retrieving", hash);
+  document.getElementById('source').innerText = "Retrieving " + hash
+
+  ipfs.files.get(hash, function (err, res) {
+    console.log("res", res);
     if (err || !res) {
-      // window.location.replace('http://localhost:3000/ipfs/' + hash);
-      // download('http://localhost:3000/ipfs/' + hash, function(data){
-      // download('http://philes.co/ipfs/' + hash, function(data){
-        download('http://' + options.hostname + ':' + options.port + '/ipfs/' + hash, function(data){
-        // console.log(data);
+      download('http://' + host.hostname + ':' + host.port + '/ipfs/' + hash, function(data){
         document.getElementById('source').innerText = data
         window.history.pushState(null, "Philes", hash);
-      });
-      return console.error('ipfs cat error', err, res)
+        hashContent = data;
+        // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
+        // window.yTextarea.share.textarea.insert(0, data)
+      })
+    } else {
+      document.getElementById('source').innerText = res[0].content.toString('utf8')
+      window.history.pushState(null, "Philes", hash);
+      hashContent = res[0].content.toString('utf8');
+      // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
+      // window.yTextarea.share.textarea.insert(0, res[0].content.toString('utf8'))
     }
-
-    // document.getElementById('hash').innerText = hash
-    document.getElementById('source').innerText = res.toString()
-    window.history.pushState(null, "Philes", hash);
   })
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('store').onclick = store
 })
-
-if (window.location.pathname.slice(1) !== ""){
-  display(window.location.pathname.slice(1));
-}
-
-setInterval(function(){
-  ipfs.swarm.peers(function (err, peerInfos) {
-    if (err) {
-      document.getElementById('hash').innerText = 'IPFS daemon not running.';
-    }
-    document.getElementById('hash').innerText = "Peers: " + peerInfos.length;
-  })
-}, 3000);
