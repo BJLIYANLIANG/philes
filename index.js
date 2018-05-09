@@ -4,7 +4,7 @@ const host = {
   // hostname: 'localhost',
   // port: 3000
   hostname: 'philes.co',
-  port: 80
+  port: 443
 }
 
 const IPFS = require('ipfs')
