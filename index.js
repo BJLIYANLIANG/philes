@@ -16,7 +16,6 @@ require('y-array')(Y)
 require('y-text')(Y)
 
 function repo () {
-  // return 'ipfs/yjs-demo/' + Math.random()
   return 'ipfs/philes'
 }
 
@@ -148,6 +147,7 @@ function store () {
       console.log("file", file);
       if (file && file.hash) {
         console.log('successfully saved locally', file.hash);
+        window.history.pushState(null, "Philes", file.hash);
         upload(null, function(data){
           console.log('successfully saved on cluster', data);
           window.history.pushState(null, "Philes", data);
@@ -165,7 +165,7 @@ function display (hash) {
   ipfs.files.get(hash, function (err, res) {
     console.log("res", res);
     if (err || !res) {
-      download('https://' + host.hostname + ':' + host.port + '/ipfs/' + hash, function(data){
+      download('/ipfs/' + hash, function(data){
         document.getElementById('source').innerText = data
         window.history.pushState(null, "Philes", hash);
         hashContent = data;

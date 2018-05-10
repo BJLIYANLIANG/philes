@@ -11,6 +11,11 @@ var ipfsapi = IPFS({host: '127.0.0.1', port: '5001', protocol: 'http'})
 var Readable = require('stream').Readable;
 
 app.use(express.static('public'));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/ipfs/*', function(req, res) {
   if(req.originalUrl.substring(6) != ""){
