@@ -1,35 +1,17 @@
-# Bundle js-ipfs-api with Browserify!
+# Philes
 
-> In this example, you will find a boilerplate you can use to guide yourself into bundling js-ipfs-api with browserify, so that you can use it in your own web app!
+Philes is a decentralized notepad or possibly google docs. It allows you to read and write content to IPFS in a decentralized fashion.
 
-## Setup
+Philes also supports collaborative editing with many peers on the same document.
 
-As for any js-ipfs-api example, **you need a running IPFS daemon**, you learn how to do that here:
+This project should still be considered work in progress...
 
-- [Spawn a go-ipfs daemon](https://ipfs.io/docs/getting-started/)
-- [Spawn a js-ipfs daemon](https://github.com/ipfs/js-ipfs#usage)
+## Origin of the name
+Philes commonly refer to files about hacking in the days of BBSs. The use of ph in lieu of f is an homage to the word phone.
 
-**Note:** If you load your app from a different domain than the one the daemon is running (most probably), you will need to set up CORS, see https://github.com/ipfs/js-ipfs-api#cors to learn how to do that.
+Phrack has a hacker magazine back in the day. Its issues were released irregularly, and like academic publications issues were grouped into volumes. Each issue was comprised of a number of Philes: stand-alone text files of very technical or counter-cultural content. Philes were submitted by members of the hacker underground community, and were reviewed by the editors.
 
-A quick (and dirty way to get it done) is:
+## Demo
 
-```bash
-> ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*\"]"
-> ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials "[\"true\"]"
-```
-
-## Run this example
-
-Once the daemon is on, run the following commands within this folder:
-
-```bash
-> npm install
-> npm start
-```
-
-Now open your browser at `http://localhost:8888`
-
-You should see the following:
-
-![](https://ipfs.io/ipfs/QmNtpcWCEd6LjdPNfBFDaVZdD4jpgT8ZTAwoFJXKhYMJdo/1.png)
-![](https://ipfs.io/ipfs/QmNtpcWCEd6LjdPNfBFDaVZdD4jpgT8ZTAwoFJXKhYMJdo/2.png)
+Here's a video of Philes in action:
+[https://www.youtube.com/watch?v=7mkcSXPHtFk](https://www.youtube.com/watch?v=7mkcSXPHtFk)
