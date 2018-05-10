@@ -162,24 +162,20 @@ function display (hash) {
   console.log("Retrieving", hash);
   document.getElementById('source').innerText = "Retrieving " + hash
 
-  ipfs.files.get(hash, function (err, res) {
-    console.log("res", res);
-    if (err || !res) {
+  // ipfs.files.get(hash, function (err, res) {
+  //   console.log("res", res);
+  //   if (err || !res) {
       download('/ipfs/' + hash, function(data){
         document.getElementById('source').innerText = data
         window.history.pushState(null, "Philes", hash);
         hashContent = data;
-        // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
-        // window.yTextarea.share.textarea.insert(0, data)
       })
-    } else {
-      document.getElementById('source').innerText = res[0].content.toString('utf8')
-      window.history.pushState(null, "Philes", hash);
-      hashContent = res[0].content.toString('utf8');
-      // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
-      // window.yTextarea.share.textarea.insert(0, res[0].content.toString('utf8'))
-    }
-  })
+    // } else {
+    //   document.getElementById('source').innerText = res[0].content.toString('utf8')
+    //   window.history.pushState(null, "Philes", hash);
+    //   hashContent = res[0].content.toString('utf8');
+    // }
+  // })
 }
 
 document.addEventListener('DOMContentLoaded', function () {
