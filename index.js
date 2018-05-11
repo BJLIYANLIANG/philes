@@ -150,7 +150,7 @@ function store () {
         window.history.pushState(null, "Philes", file.hash);
         upload(null, function(data){
           console.log('successfully saved on cluster', data);
-          window.history.pushState(null, "Philes", data);
+          // window.history.pushState(null, "Philes", data);
         });
         // window.history.pushState(null, "Philes", file.hash);
       }
@@ -159,8 +159,12 @@ function store () {
 }
 
 function display (hash) {
-  console.log("Retrieving", hash);
-  document.getElementById('source').innerText = "Retrieving " + hash
+  if(hash.startsWith('0.', 0)){
+    document.getElementById('source').innerText = "start typing :)"
+  } else {
+    console.log("Retrieving", hash);
+    document.getElementById('source').innerText = "Retrieving " + hash
+  }
 
   ipfs.files.get(hash, function (err, res) {
     console.log("res", res);
