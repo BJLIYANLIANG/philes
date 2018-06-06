@@ -61,7 +61,7 @@ ipfs.once('ready', () => ipfs.id((err, info) => {
 
   // PHILES.CO Server =  138.197.122.108 - QmcmpPQ3JckMMLTVRcCpwvM75vm43i78D7Vbxs7bNRj1dH
   // ipfs.swarm.connect("/ip4/127.0.0.1/tcp/4004/ws/ipfs/QmYHAswgHExLkr5mNSGPGsnBcgrpnkZRem2dZMLynEipzS", (err) => {
-  ipfs.swarm.connect("/ip4/138.197.122.108/tcp/4004/ws/ipfs/QmcmpPQ3JckMMLTVRcCpwvM75vm43i78D7Vbxs7bNRj1dH", (err) => {
+  ipfs.swarm.connect("//ip4/138.197.122.108/tcp/4004/ws/ipfs/QmcmpPQ3JckMMLTVRcCpwvM75vm43i78D7Vbxs7bNRj1dH", (err) => {
     if (err) {
       return console.error(err)
     }
