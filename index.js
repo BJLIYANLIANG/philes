@@ -1,10 +1,10 @@
 'use strict'
 
 const host = {
-  // hostname: 'localhost',
-  // port: 3000
-  hostname: 'philes.co',
-  port: 443
+  hostname: 'localhost',
+  port: 3000
+  // hostname: 'philes.co',
+  // port: 443
 }
 
 const IPFS = require('ipfs')
@@ -19,12 +19,14 @@ function repo () {
   return 'ipfs/philes'
 }
 
-const ipfs = new IPFS({
-  repo: repo(),
-  EXPERIMENTAL: {
-    pubsub: true
-  }
-})
+// const ipfs = new IPFS({
+//   repo: repo(),
+//   EXPERIMENTAL: {
+//     pubsub: true
+//   }
+// })
+
+const ipfs = new IPFS({repo: '.repo' + Math.random(), start: true, EXPERIMENTAL: { pubsub: true, relay: { enabled: true, hop: { enabled: true } } } })
 
 var loadHash = window.location.pathname.slice(1);
 if (loadHash == ""){
@@ -56,6 +58,13 @@ ipfs.once('ready', () => ipfs.id((err, info) => {
   if (err) { throw err }
 
   console.log('IPFS node ready with address ' + info.id)
+
+  ipfs.swarm.connect("/ip4/127.0.0.1/tcp/4004/ws/ipfs/QmYHAswgHExLkr5mNSGPGsnBcgrpnkZRem2dZMLynEipzS", (err) => {
+    if (err) {
+      return console.error(err)
+    }
+    console.log("connected to swarm via relay");
+  })
 
   if (loadHash !== ""){
     display(loadHash);

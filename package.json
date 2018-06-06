@@ -1,6 +1,6 @@
 {
   "name": "philes",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Philes - distributed notepads",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "browserify": "^14.4.0",
     "express": "^4.16.3",
-    "ipfs": "^0.28.2",
+    "ipfs": "^0.29.3",
     "ipfs-api": "^20.2.1",
     "pump": "^3.0.0",
     "y-array": "^10.1.4",
