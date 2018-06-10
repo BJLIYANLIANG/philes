@@ -8,12 +8,12 @@ const host = {
 }
 
 const IPFS = require('ipfs')
-const Y = require('yjs')
-// require('y-ipfs-connector')(Y)
-require('y-websockets-client')(Y)
-require('y-memory')(Y)
-require('y-array')(Y)
-require('y-text')(Y)
+// const Y = require('yjs')
+// // require('y-ipfs-connector')(Y)
+// require('y-websockets-client')(Y)
+// require('y-memory')(Y)
+// require('y-array')(Y)
+// require('y-text')(Y)
 
 function repo () {
   return 'ipfs/philes'
@@ -35,24 +35,24 @@ if (loadHash == ""){
 }
 var hashContent = "";
 
-Y({
-  db: {
-    name: 'memory'
-  },
-  connector: {
-    name: 'websockets-client',
-    room: loadHash
-  },
-  sourceDir: '/bower_components',
-  share: {
-    textarea: 'Text'
-  }
-}).then((y) => {
-  window.yTextarea = y
-  y.share.textarea.bind(document.getElementById('source'))
-  // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
-  window.yTextarea.share.textarea.insert(0, hashContent)
-})
+// Y({
+//   db: {
+//     name: 'memory'
+//   },
+//   connector: {
+//     name: 'websockets-client',
+//     room: loadHash
+//   },
+//   sourceDir: '/bower_components',
+//   share: {
+//     textarea: 'Text'
+//   }
+// }).then((y) => {
+//   window.yTextarea = y
+//   y.share.textarea.bind(document.getElementById('source'))
+//   // window.yTextarea.share.textarea.delete(0, window.yTextarea.share.textarea.length)
+//   window.yTextarea.share.textarea.insert(0, hashContent)
+// })
 
 ipfs.once('ready', () => ipfs.id((err, info) => {
   if (err) { throw err }
@@ -103,12 +103,12 @@ function download(url, cb) {
 
 function upload(url, cb) {
 
-  // var postData = {
-  //   'msg' : document.getElementById('source').value
-  // };
   var postData = {
-    'msg' : window.yTextarea.share.textarea.toString()
+    'msg' : document.getElementById('source').value
   };
+  // var postData = {
+  //   'msg' : window.yTextarea.share.textarea.toString()
+  // };
 
 
   var https = require("https")
@@ -147,8 +147,8 @@ function upload(url, cb) {
 
 function store () {
   console.log("Saving to IPFS");
-  // var toStore = document.getElementById('source').value
-  var toStore = window.yTextarea.share.textarea.toString()
+  var toStore = document.getElementById('source').value
+  // var toStore = window.yTextarea.share.textarea.toString()
   ipfs.files.add(new Buffer(toStore), function (err, res) {
     if (err || !res) {
       return console.error('ipfs add error', err, res)
