@@ -68,9 +68,13 @@ ipfs.once('ready', () => ipfs.id((err, info) => {
     console.log("connected to swarm via relay");
   })
 
-  if (loadHash !== ""){
-    display(loadHash);
-  }
+
+  $( document ).ready(function() {
+    if (loadHash !== ""){
+      display(loadHash);
+    }
+  });
+
 
   setInterval(function(){
     ipfs.swarm.peers(function (err, peerInfos) {
