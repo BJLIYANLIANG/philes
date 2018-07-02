@@ -28,11 +28,11 @@ function repo () {
 
 const ipfs = new IPFS({repo: '.repo' + Math.random(), start: true, EXPERIMENTAL: { pubsub: true, relay: { enabled: true, hop: { enabled: true } } } })
 
-var loadHash = window.location.pathname.slice(1);
-if (loadHash == ""){
-  loadHash = Math.random()
-  window.history.pushState(null, "Philes", loadHash);
-}
+// var loadHash = window.location.pathname.slice(1);
+// if (loadHash == ""){
+//   loadHash = Math.random()
+//   window.history.pushState(null, "Philes", loadHash);
+// }
 var hashContent = "";
 
 // Y({
@@ -70,9 +70,12 @@ ipfs.once('ready', () => ipfs.id((err, info) => {
 
 
   $( document ).ready(function() {
-    if (loadHash !== ""){
-      display(loadHash);
+    var loadHash = window.location.pathname.slice(1);
+    if (loadHash == undefined || loadHash == ""){
+      loadHash = Math.random()
+      window.history.pushState(null, "Philes", loadHash);
     }
+    display(loadHash);
   });
 
 
@@ -174,7 +177,9 @@ function store () {
 }
 
 function display (hash) {
-  if(hash.startsWith('0.', 0)){
+  // if(hash.startsWith('0.', 0)){
+  console.log("HASH>", hash);
+  if(hash.toString().indexOf('0') == 0){
     document.getElementById('source').innerText = "start typing :)"
   } else {
     console.log("Retrieving", hash);
