@@ -178,28 +178,28 @@ function store () {
 
 function display (hash) {
   // if(hash.startsWith('0.', 0)){
-  console.log("HASH>", hash);
   if(hash.toString().indexOf('0') == 0){
     document.getElementById('source').innerText = "start typing :)"
   } else {
     console.log("Retrieving", hash);
     document.getElementById('source').innerText = "Retrieving " + hash
-  }
 
-  ipfs.files.get(hash, function (err, res) {
-    console.log("res", res);
-    if (err || !res) {
-      download('/ipfs/' + hash, function(data){
-        document.getElementById('source').innerText = data
+    ipfs.files.get(hash, function (err, res) {
+      console.log("res", res);
+      if (err || !res) {
+        download('/ipfs/' + hash, function(data){
+          document.getElementById('source').innerText = data
+          window.history.pushState(null, "Philes", hash);
+          hashContent = data;
+        })
+      } else {
+        document.getElementById('source').innerText = res[0].content.toString('utf8')
         window.history.pushState(null, "Philes", hash);
-        hashContent = data;
-      })
-    } else {
-      document.getElementById('source').innerText = res[0].content.toString('utf8')
-      window.history.pushState(null, "Philes", hash);
-      hashContent = res[0].content.toString('utf8');
-    }
-  })
+        hashContent = res[0].content.toString('utf8');
+      }
+    })
+
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
