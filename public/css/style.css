@@ -47,6 +47,9 @@ nav.sidebar, .main{
 .main{
   /*padding: 10px 10px 0 10px;*/
 }
+.markdown{
+  padding: 30px 30px 30px 30px;
+}
 
 @media (min-width: 765px) {
 

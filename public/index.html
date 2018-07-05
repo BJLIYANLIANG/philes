@@ -31,6 +31,7 @@
 					<li id="store"><a href="#">Save<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-floppy-disk"></span></a></li>
 					<!-- <li ><a href="javascript:printDiv('source')">Print<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-print"></span></a></li> -->
 	        <!-- <li ><a href="#" onclick="raw();">Raw<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-console"></span></a></li> -->
+					<li ><a href="javascript:markdown();">Markdown<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-globe"></span></a></li>
 					<li ><a href="javascript:contrast();">Contrast<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-adjust"></span></a></li>
 	      </ul>
 	    </div>
@@ -40,11 +41,11 @@
 </nav>
 
 	<div class="main">
-		<div class="containerx">
+		<div class="containerx" id="containerx">
 
 			<textarea id="source" oninput="savedata();" autofocus spellcheck="true"></textarea>
 		  <!-- <div class="content" id="hash" style="float: left;"><img src="images/blackheartlogo.png" width="200"></div> -->
-
+			<div id="markdown" class="markdown"></div>
 		</div>
 	</div>
 
@@ -115,15 +116,20 @@
 
 	<script type="text/javascript">
 		var white = true;
+		var edit = true;
 
 		function contrast(){
 			if(white == true){
 				$("#source")[0].style.backgroundColor = "#000";
 				$("#source")[0].style.color = "#fff";
+				$("#markdown")[0].style.backgroundColor = "#000";
+				$("#markdown")[0].style.color = "#fff";
 				white = false;
 			} else {
 				$("#source")[0].style.backgroundColor = "#fff";
 				$("#source")[0].style.color = "#000";
+				$("#markdown")[0].style.backgroundColor = "#fff";
+				$("#markdown")[0].style.color = "#000";
 				white = true;
 
 			}
@@ -153,6 +159,24 @@
 
   	}
 
+		function markdown(){
+			var converter = new showdown.Converter();
+			var source = document.getElementById('source').value;
+
+			if(edit == false){
+				$("#source").show()
+				$("#markdown").hide()
+				edit = true;
+			} else {
+				var html = converter.makeHtml(source);
+				$("#markdown").html(html);
+				$("#markdown").show()
+				$("#source").hide()
+				edit = false;
+			}
+		}
+
+
 	</script>
 	<!-- <script
 	  src="/js/jquery-3.2.1.min.js"
@@ -166,7 +190,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src="js/newnav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
 <script src="bundle.js"></script>
-
 </body>
 </html>
