@@ -53,6 +53,7 @@ nav.sidebar, .main{
   height: 100%;
   border: 0;
   margin: 0;
+  position: fixed;
 }
 
 @media (min-width: 765px) {
