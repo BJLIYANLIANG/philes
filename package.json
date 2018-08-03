@@ -13,11 +13,11 @@
   "dependencies": {
     "browserify": "^14.4.0",
     "express": "^4.16.3",
-    "ipfs": "^0.29.3",
+    "ipfs": "^0.31.2",
     "ipfs-api": "^20.2.1",
     "pump": "^3.0.0",
     "y-array": "^10.1.4",
-    "y-ipfs-connector": "^2.2.0",
+    "y-ipfs-connector": "^2.3.0",
     "y-memory": "^8.0.9",
     "y-text": "^9.5.1",
     "y-websockets-client": "^8.0.16",
