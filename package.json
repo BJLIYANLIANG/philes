@@ -20,7 +20,6 @@
     "y-ipfs-connector": "^2.3.0",
     "y-memory": "^8.0.9",
     "y-text": "^9.5.1",
-    "y-websockets-client": "^8.0.16",
     "yjs": "^12.3.3"
   }
 }
